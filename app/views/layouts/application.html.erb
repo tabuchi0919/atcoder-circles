@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AtcoderCircles</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <% flash.each do |type, msg| %>
+        <div class="alert <%= bootstrap_class_for_flash(type) %> alert-dismissable fade show">
+          <%= msg %>
+          <button class="close" data-dismiss="alert">x</button>
+        </div>
+      <% end %>
+    </div>
+    <%= yield %>
+  </body>
+</html>
