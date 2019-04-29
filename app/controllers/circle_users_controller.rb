@@ -4,7 +4,7 @@ class CircleUsersController < ApplicationController
 
     unless user
       flash[:error] = 'ユーザーが存在しません'
-      return redirect_back(fallback_location: Circle)
+      return redirect_back(fallback_location: circles_path)
     end
 
     circle_user = CircleUser.new(
@@ -17,7 +17,7 @@ class CircleUsersController < ApplicationController
     else
       flash[:error] = '追加に失敗しました'
     end
-    redirect_back(fallback_location: Circle)
+    redirect_back(fallback_location: circles_path)
   end
 
   def destroy
@@ -31,6 +31,6 @@ class CircleUsersController < ApplicationController
     else
       flash[:error] = '削除に失敗しました'
     end
-    redirect_back(fallback_location: Circle)
+    redirect_back(fallback_location: circles_path)
   end
 end

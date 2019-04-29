@@ -1,4 +1,6 @@
 class Circle < ApplicationRecord
+  has_secure_password
+
   validates :circle_name, presence: true, uniqueness: true
 
   has_many :circle_users

@@ -13,6 +13,16 @@
   <body>
   <nav class="navbar navbar-dark bg-dark">
     <span class="navbar-brand mb-0 h1">AtCoderCircles</span>
+    <% if signed_in? %>
+      <span class="navbar-brand mb-0 h1"><%= current_circle.circle_name %>としてログイン中</span>
+      <%= link_to 'ログアウト', logout_path, method: :delete, class:"btn btn btn-success my-2 my-sm-0"  %>
+    <% else %>
+      <%= form_with url: login_path, local: true, class: "form-inline my-2 my-lg-0" do |f| %>
+        <%= f.text_field :circle_name, placeholder: "サークル名", class: "form-control" %>
+        <%= f.password_field :password, placeholder: "パスワード", autocomplete: "off" ,class: "form-control" %>
+        <%= f.submit "ログイン" , class: "btn btn-success my-2 my-sm-0" %>
+      <% end %>
+    <% end %>
   </nav>
     <div class="container">
       <div class="contents">

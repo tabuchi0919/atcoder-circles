@@ -16,12 +16,14 @@
     <h3 class="text-center">
       <%= @circle.users.count %>名
     </h3>
-    <%= form_with model: @circle.circle_users.build, class: 'row justify-content-center' do |f| %>
-      <div class="form-group form-inline">
-        <%= f.text_field :user_name, class: 'form-control' %>
-        <%= f.hidden_field :circle_id, value: @circle.id %>
-        <%= f.submit '追加', class: "btn btn-primary" %>
-      </div>
+    <% if @edible %>
+      <%= form_with model: @circle.circle_users.build, class: 'row justify-content-center' do |f| %>
+        <div class="form-group form-inline">
+          <%= f.text_field :user_name, class: 'form-control' %>
+          <%= f.hidden_field :circle_id, value: @circle.id %>
+          <%= f.submit '追加', class: "btn btn-primary" %>
+        </div>
+      <% end %>
     <% end %>
     <table class="table-sm table-bordered table-striped th-center tables-hover-rows" style="width: 80%; margin: 0 auto;">
       <thead>
@@ -30,7 +32,7 @@
           <th>ユーザ</th>
           <th>Rating</th>
           <th>最高値</th>
-          <th>削除</th>
+          <% '<th>削除</th>' if @edible %>
         </tr>
       </thead>
       <tbody>
@@ -40,11 +42,13 @@
             <td><%= link_to user.user_name, "https://atcoder.jp/users/#{user.user_name}", class: "user-#{color(user)}" %></td>
             <td><%= user.rating %></td>
             <td><%= user.highest %></td>
-            <td>
-              <%= link_to circle_user_path(id: @circle.id, user_id: user), method: :delete do %>
-                <i class="fas fa-minus-circle" style="color: red;"></i>
-              <% end %>
-            </td>
+            <% if @edible %>
+              <td>
+                <%= link_to circle_user_path(id: @circle.id, user_id: user), method: :delete do %>
+                  <i class="fas fa-minus-circle" style="color: red;"></i>
+                <% end %>
+              </td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>

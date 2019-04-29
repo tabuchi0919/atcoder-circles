@@ -1,4 +1,6 @@
-circle = Circle.find_or_create_by(circle_name: 'UtCoder')
+circle = Circle.find_or_initialize_by(circle_name: 'UtCoder')
+circle.password ||= 'hogehoge'
+circle.save
 
 [
   "AkkyOrz",

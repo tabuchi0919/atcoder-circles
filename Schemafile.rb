@@ -29,6 +29,7 @@ end
 
 create_table :circles, force: :cascade do |t|
   t.string :circle_name, null: false
+  t.string :password_digest, null: false
   t.timestamps
   t.index :circle_name, unique: true
 end

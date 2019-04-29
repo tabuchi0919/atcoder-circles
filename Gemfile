@@ -3,16 +3,17 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.2'
 
-gem 'rails'
+gem 'bcrypt'
+gem 'bootsnap', require: false
+gem 'bootstrap'
+gem 'font-awesome-sass'
+gem 'jquery-rails'
 gem 'pg'
 gem 'puma'
-gem 'bootstrap'
-gem 'jquery-rails'
-gem 'uglifier'
-gem 'turbolinks'
+gem 'rails'
 gem 'ridgepole'
-gem 'font-awesome-sass'
-gem 'bootsnap', require: false
+gem 'turbolinks'
+gem 'uglifier'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
