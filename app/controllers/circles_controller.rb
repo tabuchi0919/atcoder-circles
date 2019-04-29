@@ -4,7 +4,7 @@ class CirclesController < ApplicationController
   end
 
   def show
-    @circle = Circle.find(params[:id])
+    @circle = Circle.find_by(circle_name: params[:circle_name])
     @virtual_contests = @circle.virtual_contests
   end
 end
