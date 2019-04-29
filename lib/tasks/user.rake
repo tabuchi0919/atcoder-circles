@@ -1,6 +1,6 @@
 namespace :user do
-  task :update, [:page] => :environment do |_t, args|
-    (args[:page]..).each do |i|
+  task :update, [:page_number] => :environment do |_t, args|
+    (args[:page_number]..).each do |i|
       html = open("https://atcoder.jp/ranking?page=#{i}").read
       doc = Nokogiri::HTML.parse(html, nil, 'utf-8')
       (1..100).each do |j|

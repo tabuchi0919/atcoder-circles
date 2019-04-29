@@ -22,10 +22,12 @@ group :development, :test do
 end
 
 group :development do
-  gem 'web-console'
+  gem 'chromedriver-helper'
   gem 'listen'
+  gem 'selenium-webdriver'
   gem 'spring'
   gem 'spring-watcher-listen'
+  gem 'web-console'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

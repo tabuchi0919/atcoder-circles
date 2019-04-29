@@ -1,15 +1,3 @@
-# create_table "submissions", force: :cascade do |t|
-#   t.bigint "epoch_second", null: false
-#   t.bigint "problem_id", null: false
-#   t.bigint "contest_id", null: false
-#   t.bigint "user_id", null: false
-#   t.string "language", null: false
-#   t.float "point", null: false
-#   t.integer "length", null: false
-#   t.integer "result", null: false
-#   t.integer "execution_time"
-# end
-
 create_table :users, force: :cascade do |t|
   t.string :user_name, null: false
   t.integer :rating, null: false
@@ -42,21 +30,28 @@ create_table :virtual_contests, force: :cascade do |t|
   t.index :circle_id
 end
 
-# create_table "contests", force: :cascade do |t|
-#   t.bigint "start_epoch_second", null: false
-#   t.bigint "duration_second", null: false
-#   t.string "title", null: false
-#   t.string "rate_change", null: false
-# end
+create_table :contests, id: :string, force: :cascade do |t|
+  t.string :title, null: false
+end
 
-# create_table "contest_problem", primary_key: ["contest_id", "problem_id"], force: :cascade do |t|
-#   t.bigint "contest_id", null: false
-#   t.bigint "problem_id", null: false
-#   t.float "point", null: false
-# end
+create_table :tasks, force: :cascade do |t|
+  t.string :contest_id, null: false
+  t.string :heading, null: false
+  t.string :url, null: false
+end
 
-# create_table "problems", force: :cascade do |t|
-#   t.string "name", null: false
-#   t.string "title", null: false
-# end
+create_table :standings, force: :cascade do |t|
+  t.string :contest_id, null: false
+  t.string :user_name, null: false
+  t.integer :rank, null: false
+  t.integer :final_score
+  t.integer :final_penalty
+  t.string :final_time
+end
 
+create_table :submissions, force: :cascade do |t|
+  t.bigint :standing_id, null: false
+  t.integer :score
+  t.integer :penalty
+  t.string :time
+end

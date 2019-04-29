@@ -1,0 +1,51 @@
+<h1 class="text-center m-4">
+  <%= @contest.title %>
+</h1>
+
+<h3 class="text-center m-4">
+  <%= @circle.circle_name %>内の順位表
+</h3>
+
+<table class="table-sm table-bordered table-striped th-center tables-hover-rows" style="width: 80%; margin: 0 auto;">
+  <thead>
+    <tr>
+      <th></th>
+      <th>順位</th>
+      <th>ユーザ</th>
+      <th>得点</th>
+      <% @tasks.each do |task| %>
+        <th><%= task.heading %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% rank = 0 %>
+    <% @standings.order(:rank).each do |standing| %>
+      <% if @circle.users.include?(user = standing.user) %>
+        <tr>
+          <td><%= rank+=1 %></td>
+          <td><%= standing.rank %></td>
+          <td class=<%="user-#{color(user)}"%>><%= user.user_name %></td>
+          <td>
+            <span style="color: blue;"><%= standing.final_score %></span>
+            <span style="color: gray;"><%= standing.final_time %></span>
+            <% if standing.final_penalty %>
+              <span style="color: red;">(<%= standing.final_penalty %>)</span>
+            <% end %>
+          </td>
+          <% standing.submissions.each do |submission| %>
+            <td>
+              <% if submission.score&.positive? %>
+                <span style="color: green;"><%= submission.score %></span>
+              <% end %>
+              <span style="color: gray;"><%= submission.time %></span>
+              <% if submission.penalty&.positive? %>
+                <span style="color: red;">(<%= submission.penalty %>)</span>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

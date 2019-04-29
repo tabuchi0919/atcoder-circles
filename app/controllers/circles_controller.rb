@@ -6,6 +6,7 @@ class CirclesController < ApplicationController
   def show
     @circle = Circle.find_by(circle_name: params[:circle_name])
     @virtual_contests = @circle.virtual_contests
+    @contests = Contest.all
     @edible = (current_circle == @circle)
   end
 end
