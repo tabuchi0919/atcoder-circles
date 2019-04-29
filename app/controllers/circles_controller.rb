@@ -5,5 +5,6 @@ class CirclesController < ApplicationController
 
   def show
     @circle = Circle.find(params[:id])
+    @virtual_contests = @circle.virtual_contests
   end
 end

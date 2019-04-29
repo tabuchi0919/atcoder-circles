@@ -1,9 +1,17 @@
 class CircleUsersController < ApplicationController
   def create
+    user = User.find_by(user_name: params[:circle_user][:user_name])
+
+    unless user
+      flash[:error] = 'ユーザーが存在しません'
+      return redirect_back(fallback_location: Circle)
+    end
+
     circle_user = CircleUser.new(
-      circle_name: params[:circle_user][:circle_name],
-      user_name: params[:circle_user][:user_name]
+      circle_id: params[:circle_user][:circle_id],
+      user_id: user.id
     )
+
     if circle_user.save
       flash[:success] = '追加しました'
     else
@@ -14,9 +22,10 @@ class CircleUsersController < ApplicationController
 
   def destroy
     circle_user = CircleUser.find_by(
-      circle_name: params[:circle_name],
-      user_name: params[:user_name]
+      circle_id: params[:id],
+      user_id: params[:user_id]
     )
+
     if circle_user.delete
       flash[:success] = '削除しました'
     else

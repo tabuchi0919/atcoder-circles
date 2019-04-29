@@ -1,41 +1,62 @@
-<h1 class="text-center">
+<h1 class="text-center m-4">
   <%= @circle.circle_name %>
 </h1>
-<h3 class="text-center">
-  <%= @circle.users.count %>名
-</h3>
 
-<%= form_with model: @circle.circle_users.build, class: 'row justify-content-center' do |f| %>
-  <div class="form-group form-inline">
-    <%= f.text_field :user_name, class: 'form-control' %>
-    <%= f.hidden_field :circle_name, value: @circle.circle_name %>
-    <%= f.submit '追加', class: "btn btn-primary" %>
-  </div>
-<% end %>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a href="#tab1" class="nav-link active" data-toggle="tab">名簿</a>
+  </li>
+  <li class="nav-item">
+    <a href="#tab2" class="nav-link" data-toggle="tab">バーチャルコンテスト</a>
+  </li>
+</ul>
 
-<table class="table-sm table-bordered table-striped th-center tables-hover-rows" style="width: 40%; margin: 0 auto;">
-  <thead>
-    <tr>
-      <th>順位</th>
-      <th>ユーザ</th>
-      <th>Rating</th>
-      <th>最高値</th>
-      <th>削除</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @circle.users.order(rating: :DESC).each.with_index(1) do |user, i| %>
-      <tr>
-        <td><%= i %></td>
-        <td><%= link_to user.user_name, "https://atcoder.jp/users/#{user.user_name}", class: "user-#{color(user)}" %></td>
-        <td><%= user.rating %></td>
-        <td><%= user.highest %></td>
-        <td>
-          <%= link_to circle_user_path(user_name: user, circle_name: @circle), method: :delete do %>
-            <i class="fas fa-minus-circle" style="color: red;"></i>
-          <% end %>
-        </td>
-      </tr>
+<div class="tab-content">
+  <div id="tab1" class="tab-pane active tab-box">
+    <h3 class="text-center">
+      <%= @circle.users.count %>名
+    </h3>
+    <%= form_with model: @circle.circle_users.build, class: 'row justify-content-center' do |f| %>
+      <div class="form-group form-inline">
+        <%= f.text_field :user_name, class: 'form-control' %>
+        <%= f.hidden_field :circle_id, value: @circle.id %>
+        <%= f.submit '追加', class: "btn btn-primary" %>
+      </div>
     <% end %>
-  </tbody>
-</table>
+    <table class="table-sm table-bordered table-striped th-center tables-hover-rows" style="width: 80%; margin: 0 auto;">
+      <thead>
+        <tr>
+          <th>順位</th>
+          <th>ユーザ</th>
+          <th>Rating</th>
+          <th>最高値</th>
+          <th>削除</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @circle.users.order(rating: :DESC).each.with_index(1) do |user, i| %>
+          <tr>
+            <td><%= i %></td>
+            <td><%= link_to user.user_name, "https://atcoder.jp/users/#{user.user_name}", class: "user-#{color(user)}" %></td>
+            <td><%= user.rating %></td>
+            <td><%= user.highest %></td>
+            <td>
+              <%= link_to circle_user_path(user_id: user), method: :delete do %>
+                <i class="fas fa-minus-circle" style="color: red;"></i>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div id="tab2" class="tab-pane tab-box">
+    <div class="list-group">
+      <% @virtual_contests.order(id: :DESC).each do |virtual_contest| %>
+        <a href="<%= virtual_contest.url %>"　target="_blank" class="list-group-item">
+          <%= virtual_contest.title %>
+        </a>
+      <% end %>
+    </div>
+  </div>
+</div>

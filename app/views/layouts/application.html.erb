@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>AtcoderCircles</title>
+    <title>AtCoderCircles</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,14 +11,19 @@
   </head>
 
   <body>
+  <nav class="navbar navbar-dark bg-dark">
+    <span class="navbar-brand mb-0 h1">AtCoderCircles</span>
+  </nav>
     <div class="container">
-      <% flash.each do |type, msg| %>
-        <div class="alert <%= bootstrap_class_for_flash(type) %> alert-dismissable fade show">
-          <%= msg %>
-          <button class="close" data-dismiss="alert">x</button>
-        </div>
-      <% end %>
+      <div class="contents">
+        <% flash.each do |type, msg| %>
+          <div class="alert <%= bootstrap_class_for_flash(type) %> alert-dismissable fade show">
+            <%= msg %>
+            <button class="close" data-dismiss="alert">x</button>
+          </div>
+        <% end %>
+      </div>
+      <%= yield %>
     </div>
-    <%= yield %>
   </body>
 </html>

@@ -10,20 +10,35 @@
 #   t.integer "execution_time"
 # end
 
-create_table :users, id: :string, primary_key: :user_name, force: :cascade do |t|
+create_table :users, force: :cascade do |t|
+  t.string :user_name, null: false
   t.integer :rating, null: false
   t.integer :highest, null: false
+  t.timestamps
+  t.index :user_name, unique: true
   t.index :rating
   t.index :highest
 end
 
 create_table :circle_users, force: :cascade do |t|
-  t.string :circle_name, null: false
-  t.string :user_name, null: false
-  t.index [:circle_name, :user_name], unique: true
+  t.bigint :circle_id, null: false
+  t.bigint :user_id, null: false
+  t.timestamps
+  t.index [:circle_id, :user_id], unique: true
 end
 
-create_table :circles, id: :string, primary_key: :circle_name, force: :cascade do |t|
+create_table :circles, force: :cascade do |t|
+  t.string :circle_name, null: false
+  t.timestamps
+  t.index :circle_name, unique: true
+end
+
+create_table :virtual_contests, force: :cascade do |t|
+  t.bigint :circle_id, null: false
+  t.string :title, null: false
+  t.string :url, null: false
+  t.timestamps
+  t.index :circle_id
 end
 
 # create_table "contests", force: :cascade do |t|
