@@ -32,12 +32,15 @@ end
 
 create_table :contests, id: :string, force: :cascade do |t|
   t.string :title, null: false
+  t.timestamps
 end
 
 create_table :tasks, force: :cascade do |t|
   t.string :contest_id, null: false
   t.string :heading, null: false
   t.string :url, null: false
+  t.timestamps
+  t.index :contest_id
 end
 
 create_table :standings, force: :cascade do |t|
@@ -47,6 +50,11 @@ create_table :standings, force: :cascade do |t|
   t.integer :final_score
   t.integer :final_penalty
   t.string :final_time
+  t.timestamps
+  t.index :contest_id
+  t.index :user_name
+  t.index :rank
+
 end
 
 create_table :submissions, force: :cascade do |t|
@@ -54,4 +62,6 @@ create_table :submissions, force: :cascade do |t|
   t.integer :score
   t.integer :penalty
   t.string :time
+  t.timestamps
+  t.index :standing_id
 end

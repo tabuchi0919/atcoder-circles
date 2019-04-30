@@ -3,7 +3,7 @@
 </h1>
 
 <h3 class="text-center m-4">
-  <%= @circle.circle_name %>内の順位表
+  <%= link_to @circle.circle_name, @circle %>内の順位表
 </h3>
 
 <table class="table-sm table-bordered table-striped th-center tables-hover-rows" style="width: 80%; margin: 0 auto;">
@@ -33,7 +33,7 @@
               <span style="color: red;">(<%= standing.final_penalty %>)</span>
             <% end %>
           </td>
-          <% standing.submissions.each do |submission| %>
+          <% standing.submissions.order(:id).each do |submission| %>
             <td>
               <% if submission.score&.positive? %>
                 <span style="color: green;"><%= submission.score %></span>

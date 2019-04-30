@@ -8,6 +8,7 @@ gem 'bootsnap', require: false
 gem 'bootstrap'
 gem 'font-awesome-sass'
 gem 'jquery-rails'
+gem 'lazy_high_charts'
 gem 'pg'
 gem 'puma'
 gem 'rails'
