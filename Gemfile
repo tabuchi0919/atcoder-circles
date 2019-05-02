@@ -16,19 +16,13 @@ gem 'ridgepole'
 gem 'turbolinks'
 gem 'uglifier'
 
-group :development, :test do
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'pry-rails'
-  gem 'pry-byebug'
-end
-
 group :development do
+  gem 'bullet'
   gem 'chromedriver-helper'
   gem 'listen'
+  gem 'pry-byebug'
+  gem 'pry-rails'
   gem 'selenium-webdriver'
   gem 'spring'
   gem 'spring-watcher-listen'
-  gem 'web-console'
 end
-
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

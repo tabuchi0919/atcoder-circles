@@ -11,7 +11,7 @@ namespace :standing do
     task_elements[3..].each do |task_element|
       task = contest.tasks.build
       task.heading = task_element.text
-      task.url = task_element.find_element(:xpath, 'a').attribute("href")
+      task.url = task_element.find_element(:xpath, 'a').attribute('href')
       task.save!
     end
 
@@ -20,7 +20,6 @@ namespace :standing do
     page_count = driver.find_elements(:xpath, '//*[@id="main-container"]/div[1]/div[2]/div[2]/ul/li').count
 
     (1..page_count).each do |i|
-
       (1..1000).each do |j|
         standing = Standing.new(contest_id: id)
         elements = driver.find_elements(:xpath, "//*[@id=\"standings-tbody\"]/tr[#{j}]/td")
@@ -46,7 +45,8 @@ namespace :standing do
         end
       end
       break if i == page_count
-      driver.find_element(:xpath, "//*[@id=\"main-container\"]/div[1]/div[2]/div[2]/ul/li[#{i+1}]/a").click
+
+      driver.find_element(:xpath, "//*[@id=\"main-container\"]/div[1]/div[2]/div[2]/ul/li[#{i + 1}]/a").click
     end
     driver.close
   end

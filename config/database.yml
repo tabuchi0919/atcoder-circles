@@ -1,19 +1,15 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS') { 5 } %>
 
 development:
   <<: *default
   database: atcoder-circles_development
 
-test:
-  <<: *default
-  database: atcoder-circles_test
-
 production:
   <<: *default
-  database: <%= Rails.application.credentials[:db_name] %>
-  host: <%= Rails.application.credentials[:db_host] %>
-  username: <%= Rails.application.credentials[:db_user_name] %>
-  password: <%= Rails.application.credentials[:db_password] %>
+  database: <%= ENV['DB_NAME'] %>
+  host: <%= ENV['DB_HOST'] %>
+  username: <%= ENV['DB_USER_NAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>

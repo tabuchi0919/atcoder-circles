@@ -1,5 +1,5 @@
 <h1 class="text-center m-4">
-  <%= @contest.title %>
+  <%= link_to @contest.title, "https://atcoder.jp/contests/#{@contest.id}/standings" %>
 </h1>
 
 <h3 class="text-center m-4">
@@ -21,11 +21,17 @@
   <tbody>
     <% rank = 0 %>
     <% @standings.order(:rank).each do |standing| %>
-      <% if @circle.users.include?(user = standing.user) %>
+      <% user = standing.user %>
+      <% if @circle.users.include?(user) %>
         <tr>
           <td><%= rank+=1 %></td>
           <td><%= standing.rank %></td>
-          <td class=<%="user-#{color(user)}"%>><%= user.user_name %></td>
+          <td class=<%="user-#{color(user)}"%>>
+            <%= link_to user.user_name, "https://atcoder.jp/users/#{user.user_name}", class: "user-#{color(user)}" %>
+            <%= link_to "https://atcoder.jp/contests/#{@contest.id}/submissions?f.User=#{user.user_name}" do %>
+              <i class="fas fa-search" style="color: black;"></i>
+            <% end %>
+          </td>
           <td>
             <span style="color: blue;"><%= standing.final_score %></span>
             <span style="color: gray;"><%= standing.final_time %></span>

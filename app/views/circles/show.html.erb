@@ -60,9 +60,11 @@
   </div>
   <div id="tab2" class="tab-pane tab-box">
     <div class="list-group">
-      <a href="/contests/abc125?circle_name=UtCoder"　target="_blank" class="list-group-item">
-        AtCoderBeginnerContest125
-      </a>
+      <% @contests.each do |contest| %>
+        <% if contest.tasks.present? %>
+          <%= link_to contest.title, contest_path(contest, circle_name: @circle.circle_name) ,class: "list-group-item" %>
+        <% end %>
+      <% end %>
     </div>
   </div>
   <div id="tab3" class="tab-pane tab-box">

@@ -1,6 +1,6 @@
 module UsersHelper
   def color(user)
-    color_array[[user.rating/400, 7].min]
+    color_array[[user.rating / 400, 7].min]
   end
 
   private

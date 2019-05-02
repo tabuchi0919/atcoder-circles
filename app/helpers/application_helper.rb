@@ -2,13 +2,13 @@ module ApplicationHelper
   def bootstrap_class_for_flash(flash_type)
     case flash_type
     when 'success'
-      "alert-success"
+      'alert-success'
     when 'error'
-      "alert-danger"
+      'alert-danger'
     when 'alert'
-      "alert-warning"
+      'alert-warning'
     when 'notice'
-      "alert-info"
+      'alert-info'
     else
       flash_type.to_s
     end

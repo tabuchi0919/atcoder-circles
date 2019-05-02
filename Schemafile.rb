@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 create_table :users, force: :cascade do |t|
   t.string :user_name, null: false
   t.integer :rating, null: false
@@ -12,12 +14,13 @@ create_table :circle_users, force: :cascade do |t|
   t.bigint :circle_id, null: false
   t.bigint :user_id, null: false
   t.timestamps
-  t.index [:circle_id, :user_id], unique: true
+  t.index %i[circle_id user_id], unique: true
 end
 
 create_table :circles, force: :cascade do |t|
   t.string :circle_name, null: false
   t.string :password_digest, null: false
+  t.boolean :private, null: false
   t.timestamps
   t.index :circle_name, unique: true
 end
@@ -32,7 +35,9 @@ end
 
 create_table :contests, id: :string, force: :cascade do |t|
   t.string :title, null: false
+  t.integer :start_epoch_second, null: false
   t.timestamps
+  t.index :start_epoch_second
 end
 
 create_table :tasks, force: :cascade do |t|
@@ -54,7 +59,6 @@ create_table :standings, force: :cascade do |t|
   t.index :contest_id
   t.index :user_name
   t.index :rank
-
 end
 
 create_table :submissions, force: :cascade do |t|
