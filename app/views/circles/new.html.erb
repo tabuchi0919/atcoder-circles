@@ -1,0 +1,20 @@
+<div class="m-auto pt-3" style="width: 20rem;">
+  <%= form_with(model: @circle, local: true) do |f| %>
+    <div class="form-group">
+      <%= f.label 'サークル名', class: "form-control-label" %>
+      <%= f.text_field :circle_name, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label 'パスワード', class: "form-control-label" %>
+      <%= f.password_field :password, class: "form-control" %>
+    </div>
+      <div class="form-check text-center">
+        <%= f.check_box :private, class: "form-control-label" %>
+        <%= f.label '非公開にする', class: "form-control-label" %>
+      <div>
+    </div>
+    <div class="form-group field text-center">
+      <%= f.submit '新規作成', class: "btn btn-success" %>
+    </div>
+  <% end %>
+</div>

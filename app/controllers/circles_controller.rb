@@ -5,8 +5,32 @@ class CirclesController < ApplicationController
     generate_chart
   end
 
+  def new
+    @circle = Circle.new
+  end
+
+  def create
+    @circle = Circle.new(
+      circle_name: params[:circle][:circle_name],
+      password: params[:circle][:password],
+      private: ActiveRecord::Type::Boolean.new.cast(params[:circle][:private])
+    )
+    if @circle.save
+      session[:circle_id] = @circle.id
+      flash[:success] = '登録しました'
+      redirect_to @circle
+    else
+      flash[:error] = '登録に失敗しました'
+      render :new
+    end
+  end
+
   def show
     @circle = Circle.find_by(circle_name: params[:circle_name])
+    if @circle.nil? || (@circle.private && session[:circle_id] != @circle.id)
+      flash[:error] = 'ページにアクセスできませんでした'
+      return redirect_to :circles
+    end
     @users = @circle.users
     @virtual_contests = @circle.virtual_contests
     @contests = Contest.includes(:tasks).all.order(start_epoch_second: :DESC)
