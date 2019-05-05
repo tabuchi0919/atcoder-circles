@@ -20,8 +20,35 @@ class CirclesController < ApplicationController
       flash[:success] = '登録しました'
       redirect_to @circle
     else
-      flash[:error] = '登録に失敗しました'
+      flash.now[:error] = '登録に失敗しました'
       render :new
+    end
+  end
+
+  def update
+    @circle = Circle.find_by(circle_name: params[:circle_name])
+    @circle.update_attributes(
+      circle_name: params[:circle][:circle_name],
+      password: params[:circle][:password],
+      private: ActiveRecord::Type::Boolean.new.cast(params[:circle][:private])
+    )
+    if @circle.save
+      flash[:success] = '変更しました'
+    else
+      flash[:error] = '変更に失敗しました'  
+    end
+    redirect_to @circle
+  end
+
+  def destroy
+    @circle = Circle.find_by(circle_name: params[:circle_name])
+    if @circle.delete
+      flash.now[:success] = '削除しました'
+      session.delete(:circle_id)
+      render :new
+    else
+      flash[:error] = '削除に失敗しました'  
+      redirect_to @circle
     end
   end
 

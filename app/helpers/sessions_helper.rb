@@ -4,6 +4,11 @@ module SessionsHelper
   end
 
   def signed_in?
+    return false unless session[:circle_id]
+
+    if session[:circle_id] && !Circle.find_by(id: session[:circle_id])
+      session.delete(:circle_id)
+    end
     session[:circle_id].present?
   end
 

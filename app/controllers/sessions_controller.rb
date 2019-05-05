@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
       flash[:success] = 'ログインしました'
       redirect_to circle
     else
-      flash[:danger] = 'ログインに失敗しました'
+      flash[:error] = 'ログインに失敗しました'
       redirect_back(fallback_location: circles_path)
     end
   end
