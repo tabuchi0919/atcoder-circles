@@ -8,4 +8,4 @@
 
 /node_modules
 
-/config/master.key
+/config/secrets.yml.key
