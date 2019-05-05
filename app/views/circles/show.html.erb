@@ -19,16 +19,16 @@
     <h3 class="text-center">
       <%= @circle.users.count %>名
     </h3>
+    <%= high_chart("graph", @chart) %>
     <% if @edible %>
       <%= form_with model: @circle.circle_users.build, class: 'row justify-content-center' do |f| %>
         <div class="form-group form-inline">
-          <%= f.text_field :user_name, class: 'form-control' %>
+          <%= f.text_field :user_name, placeholder: "ユーザー名", class: 'form-control' %>
           <%= f.hidden_field :circle_id, value: @circle.id %>
           <%= f.submit '追加', class: "btn btn-primary" %>
         </div>
       <% end %>
     <% end %>
-    <%= high_chart("graph", @chart) %>
     <table class="table-sm table-bordered table-striped th-center tables-hover-rows" style="width: 80%; margin: 0 auto;">
       <thead>
         <tr>
@@ -36,16 +36,25 @@
           <th>ユーザ</th>
           <th>Rating</th>
           <th>最高値</th>
-          <%= '<th>削除</th>' if @edible %>
+          <%# <th>選択</th> %>
+          <% if @edible %>
+            <th>削除</th>
+          <% end %>
         </tr>
       </thead>
       <tbody>
         <% @circle.users.order(rating: :DESC).each.with_index(1) do |user, i| %>
           <tr>
             <td><%= i %></td>
-            <td><%= link_to user.user_name, "https://atcoder.jp/users/#{user.user_name}", class: "user-#{color(user)}" %></td>
+            <td>
+              <%= link_to user.user_name, "https://atcoder.jp/users/#{user.user_name}", class: "user-#{color(user)}" %>
+              <%= link_to "https://kenkoooo.com/atcoder/#/user/#{user.user_name}" do %>
+                <i class="fas fa-search" style="color: black;"></i>
+              <% end %>
+            </td>
             <td><%= user.rating %></td>
             <td><%= user.highest %></td>
+            <%# <td></td> %>
             <% if @edible %>
               <td>
                 <%= link_to circle_user_path(id: @circle.id, user_id: user), method: :delete do %>
@@ -68,11 +77,28 @@
     </div>
   </div>
   <div id="tab3" class="tab-pane tab-box">
+    <% if @edible %>
+      <%= form_with model: @circle.virtual_contests.build, class: 'row justify-content-center' do |f| %>
+        <div class="form-group form-inline">
+          <%= f.text_field :title, placeholder: "コンテスト名", class: 'form-control' %>
+          <%= f.text_field :url, placeholder: "URL", class: 'form-control' %>
+          <%= f.hidden_field :circle_id, value: @circle.id %>
+          <%= f.submit '追加', class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    <% end %>
     <div class="list-group">
       <% @virtual_contests.order(id: :DESC).each do |virtual_contest| %>
-        <a href="<%= virtual_contest.url %>"　target="_blank" class="list-group-item">
-          <%= virtual_contest.title %>
-        </a>
+        <div class="list-inline list-group-item">
+          <a href="<%= virtual_contest.url %>"　target="_blank" class="list-inline-item">
+            <%= virtual_contest.title %>
+          </a>
+          <% if @edible %>
+            <%= link_to virtual_contest_path(id: @circle.id, virtual_contest_id: virtual_contest), method: :delete, class: "list-inline-item" do %>
+              <i class="fas fa-minus-circle" style="color: red;"></i>
+            <% end %>
+          <% end %>
+        </div>
       <% end %>
     </div>
   </div>

@@ -13,4 +13,8 @@ module ApplicationHelper
       flash_type.to_s
     end
   end
+
+  def accesible?(circle)
+    circle && (!circle.private || session[:circle_id] == circle.id)
+  end
 end

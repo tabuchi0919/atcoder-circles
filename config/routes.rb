@@ -4,5 +4,6 @@ Rails.application.routes.draw do
 
   resources :circles, param: :circle_name, only: %i[index show new create edit update]
   resources :circle_users, only: %i[create destroy]
-  resources :contests, only: [:show]
+  resources :contests, only: %i[show]
+  resources :virtual_contests, only: %i[create destroy]
 end
