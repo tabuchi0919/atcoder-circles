@@ -36,7 +36,7 @@
           <th>ユーザ</th>
           <th>Rating</th>
           <th>最高値</th>
-          <%# <th>選択</th> %>
+          <th>選択</th>
           <% if @edible %>
             <th>削除</th>
           <% end %>
@@ -54,7 +54,7 @@
             </td>
             <td><%= user.rating %></td>
             <td><%= user.highest %></td>
-            <%# <td></td> %>
+            <td><input type="checkbox" name="selected[]" value= <%= user.user_name %> </td>
             <% if @edible %>
               <td>
                 <%= link_to circle_user_path(id: @circle.id, user_id: user), method: :delete do %>
@@ -66,6 +66,13 @@
         <% end %>
       </tbody>
     </table>
+    <div class="list-inline">
+      <a href=# target="_blank" id="problems" class="list-inline-item btn disabled">AtCoder Problems(1人~2人)</a>
+      <a href=# target="_blank" id="scores" class="list-inline-item btn disabled">AtCoder Scores(1人~)</a>
+      <a href=# target="_blank" id="graphs" class="list-inline-item btn disabled">精進グラフ(1人~)</a>
+      <a href=# target="_blank" id="performances" class="list-inline-item btn disabled">AtCoder Performances(1~5人)</a>
+      <a href=# target="_blank" id="janken" class="list-inline-item btn disabled">AtCoderじゃんけん(2人)</a>
+    </div>
   </div>
   <div id="tab2" class="tab-pane tab-box">
     <div class="list-group">
@@ -90,7 +97,7 @@
     <div class="list-group">
       <% @virtual_contests.order(id: :DESC).each do |virtual_contest| %>
         <div class="list-inline list-group-item">
-          <a href="<%= virtual_contest.url %>"　target="_blank" class="list-inline-item">
+          <a href="<%= virtual_contest.url %>" target="_blank" class="list-inline-item">
             <%= virtual_contest.title %>
           </a>
           <% if @edible %>
@@ -103,3 +110,46 @@
     </div>
   </div>
 </div>
+
+<script>
+$(function() {
+  $('input[name="selected[]"]').change(function() {
+    let selected = [];
+    $('input[name="selected[]"]:checked').each(function() {
+      selected.push($(this).val());
+    });
+    if(selected.length>=1){
+      var scores_url = "https://atcoder-scores.herokuapp.com/?rivals=" + selected.join(",")
+      $('#scores').removeClass('disabled')
+      $('#scores').attr("href", scores_url)
+      var graphs_url = "https://atcoder-scores.herokuapp.com/graph?user=" + selected.join(",")
+      $('#graphs').removeClass('disabled')
+      $('#graphs').attr("href", graphs_url)
+    }else{
+      $('#scores').addClass('disabled')
+      $('#graphs').addClass('disabled')
+    }
+    if(selected.length>=1 && selected.length<=2){
+      var problems_url = "https://kenkoooo.com/atcoder/#/table/" + selected[0] + "/" + selected[1]
+      $('#problems').removeClass('disabled')
+      $('#problems').attr("href", problems_url)
+    }else{
+      $('#problems').addClass('disabled')
+    }
+    if(selected.length>=1 && selected.length<=5){
+      var performances_url = "https://atcoderapps.herokuapp.com/atcoderperformances/show_graph/?username=" + selected[0] + "&rivalname=" + selected.slice(1).join(",")
+      $('#performances').removeClass('disabled')
+      $('#performances').attr("href", performances_url)
+    }else{
+      $('#performances').addClass('disabled')
+    }
+    if(selected.length==2){
+      var janken_url = "https://atcoder-janken.appspot.com/?id1=" + selected[0] + "&id2=" + selected[1]
+      $('#janken').removeClass('disabled')
+      $('#janken').attr("href", janken_url)
+    }else{
+      $('#janken').addClass('disabled')
+    }
+  });
+});
+</script>
