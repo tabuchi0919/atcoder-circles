@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "private", null: false
+    t.boolean "university", default: false, null: false
     t.index ["circle_name"], name: "index_circles_on_circle_name", unique: true
   end
 

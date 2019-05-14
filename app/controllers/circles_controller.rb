@@ -1,8 +1,6 @@
 class CirclesController < ApplicationController
   def index
-    @circles = Circle.all
-    @users = User.all
-    generate_chart
+    @circles = Circle.where(university: true)
   end
 
   def new
