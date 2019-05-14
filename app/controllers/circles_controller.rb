@@ -63,6 +63,17 @@ class CirclesController < ApplicationController
     generate_chart
   end
 
+  def api
+    circle = Circle.find_by(circle_name: params[:circle_circle_name])
+    if circle&.private
+      render status: 403, json: { status: 403, message: 'Forbidden' }
+    elsif circle
+      render status: 200, :json => circle.users.map(&:user_name)
+    else
+      render status: 400, json: { status: 400, message: 'Bad Request' }
+    end
+  end
+
   private
 
   def generate_chart
