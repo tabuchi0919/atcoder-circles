@@ -56,7 +56,7 @@ class CirclesController < ApplicationController
       flash[:error] = 'ページにアクセスできませんでした'
       return redirect_to :circles
     end
-    @users = @circle.users
+    @users = @circle.users.order('rating DESC NULLS LAST')
     @virtual_contests = @circle.virtual_contests
     @edible = (current_circle == @circle)
     generate_chart

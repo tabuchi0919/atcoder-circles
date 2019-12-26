@@ -1,11 +1,6 @@
 class CircleUsersController < ApplicationController
   def create
-    user = User.find_by(user_name: params[:circle_user][:user_name])
-
-    unless user
-      flash[:error] = 'ユーザーが存在しません'
-      return redirect_back(fallback_location: circles_path)
-    end
+    user = User.find_or_create_by(user_name: params[:circle_user][:user_name])
 
     circle_user = CircleUser.new(
       circle_id: params[:circle_user][:circle_id],

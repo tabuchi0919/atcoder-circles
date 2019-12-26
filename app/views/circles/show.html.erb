@@ -45,7 +45,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @circle.users.order(rating: :DESC).each.with_index(1) do |user, i| %>
+        <% @users.each.with_index(1) do |user, i| %>
           <tr>
             <td><%= i %></td>
             <td>
