@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2019_12_26_011534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,51 +33,10 @@ ActiveRecord::Schema.define(version: 0) do
     t.index ["circle_name"], name: "index_circles_on_circle_name", unique: true
   end
 
-  create_table "contests", id: :string, force: :cascade do |t|
-    t.string "title", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "start_epoch_second", null: false
-    t.index ["start_epoch_second"], name: "index_contests_on_start_epoch_second"
-  end
-
-  create_table "standings", force: :cascade do |t|
-    t.string "contest_id", null: false
-    t.string "user_name", null: false
-    t.integer "rank", null: false
-    t.integer "final_score"
-    t.integer "final_penalty"
-    t.string "final_time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["contest_id"], name: "index_standings_on_contest_id"
-    t.index ["rank"], name: "index_standings_on_rank"
-    t.index ["user_name"], name: "index_standings_on_user_name"
-  end
-
-  create_table "submissions", force: :cascade do |t|
-    t.bigint "standing_id", null: false
-    t.integer "score"
-    t.integer "penalty"
-    t.string "time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["standing_id"], name: "index_submissions_on_standing_id"
-  end
-
-  create_table "tasks", force: :cascade do |t|
-    t.string "contest_id", null: false
-    t.string "heading", null: false
-    t.string "url", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["contest_id"], name: "index_tasks_on_contest_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "user_name", null: false
-    t.integer "rating", null: false
-    t.integer "highest", null: false
+    t.integer "rating"
+    t.integer "highest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["highest"], name: "index_users_on_highest"

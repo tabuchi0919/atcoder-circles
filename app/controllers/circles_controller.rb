@@ -58,7 +58,6 @@ class CirclesController < ApplicationController
     end
     @users = @circle.users
     @virtual_contests = @circle.virtual_contests
-    @contests = Contest.includes(:tasks).all.order(start_epoch_second: :DESC)
     @edible = (current_circle == @circle)
     generate_chart
   end

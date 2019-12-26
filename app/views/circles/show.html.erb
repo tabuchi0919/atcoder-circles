@@ -7,14 +7,11 @@
     <a href="#tab1" class="nav-link active" data-toggle="tab">名簿</a>
   </li>
   <li class="nav-item">
-    <a href="#tab2" class="nav-link" data-toggle="tab">コンテスト</a>
-  </li>
-  <li class="nav-item">
-    <a href="#tab3" class="nav-link" data-toggle="tab">バーチャルコンテスト</a>
+    <a href="#tab2" class="nav-link" data-toggle="tab">バーチャルコンテスト</a>
   </li>
   <% if @edible %>
     <li class="nav-item">
-      <a href="#tab4" class="nav-link" data-toggle="tab">サークル情報編集</a>
+      <a href="#tab3" class="nav-link" data-toggle="tab">サークル情報編集</a>
     </li>
   <% end %>
 </ul>
@@ -57,8 +54,13 @@
                 <i class="fas fa-search" style="color: black;"></i>
               <% end %>
             </td>
-            <td><%= user.rating %></td>
-            <td><%= user.highest %></td>
+            <% if user.rating.present? && user.highest.present? %>
+              <td><%= user.rating %></td>
+              <td><%= user.highest %></td>
+            <% else %>
+              <td>次の更新を</td>
+              <td>お待ち下さい</td>
+            <% end %>
             <td><input type="checkbox" name="selected[]" value= <%= user.user_name %> </td>
             <% if @edible %>
               <td>
@@ -80,15 +82,6 @@
     </div>
   </div>
   <div id="tab2" class="tab-pane tab-box">
-    <div class="list-group">
-      <% @contests.each do |contest| %>
-        <% if contest.tasks.present? %>
-          <%= link_to contest.title, contest_path(contest, circle_name: @circle.circle_name) ,class: "list-group-item" %>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-  <div id="tab3" class="tab-pane tab-box">
     <% if @edible %>
       <%= form_with model: @circle.virtual_contests.build, class: 'row justify-content-center' do |f| %>
         <div class="form-group form-inline">
@@ -116,7 +109,7 @@
   </div>
 
   <% if @edible %>
-    <div id="tab4" class="tab-pane tab-box">
+    <div id="tab3" class="tab-pane tab-box">
       <%= form_with model: @circle, class: 'row justify-content-center' do |f| %>
         <div class="form-group">
           <%= f.label '新規サークル名', class: "form-control-label" %>

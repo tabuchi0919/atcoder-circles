@@ -6,6 +6,5 @@ Rails.application.routes.draw do
     get :api, to: 'circles#api'
   end
   resources :circle_users, only: %i[create destroy]
-  resources :contests, only: %i[show]
   resources :virtual_contests, only: %i[create destroy]
 end

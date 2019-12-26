@@ -9,7 +9,8 @@ namespace :user do
         row = "#main-container > div.row > div > div.panel.panel-default.panel-filter > div.table-responsive > table > tbody > tr:nth-child(#{j})"
         name = doc.css("#{row} > td:nth-child(2) > a.username > span").text
         exit if name.empty?
-        user = User.find_or_initialize_by(user_name: name)
+        user = User.find_by(user_name: name)
+        next if user.nil?
         user.rating = doc.css("#{row} > td:nth-child(4) > b").text
         user.highest = doc.css("#{row} > td:nth-child(5) > b").text
         user.save!
