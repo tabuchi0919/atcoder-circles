@@ -38,7 +38,9 @@
           <th>ユーザ</th>
           <th>Rating</th>
           <th>最高値</th>
-          <th>選択</th>
+          <th>
+            <input type="checkbox" name="all" >
+          </th>
           <% if @edible %>
             <th>削除</th>
           <% end %>
@@ -134,7 +136,7 @@
 
 <script>
 $(function() {
-  $('input[name="selected[]"]').change(function() {
+  function update_link_disables() {
     let selected = [];
     $('input[name="selected[]"]:checked').each(function() {
       selected.push($(this).val());
@@ -171,6 +173,13 @@ $(function() {
     }else{
       $('#janken').addClass('disabled')
     }
+  }
+  $('input[name="all"]').change(function() {
+    $('input[name="selected[]"]').each(function(i, c) {
+      $(c).prop('checked', $('input[name="all"]').prop('checked'));
+    })
+    update_link_disables();
   });
+  $('input[name="selected[]"]').change(update_link_disables);
 });
 </script>
