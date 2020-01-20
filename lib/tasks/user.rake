@@ -3,7 +3,7 @@
 namespace :user do
   task :update, [:page_number] => :environment do |_t, args|
     (args[:page_number]..).each do |i|
-      html = open("https://atcoder.jp/ranking?page=#{i}").read
+      html = open("https://atcoder.jp/ranking/all?page=#{i}").read
       doc = Nokogiri::HTML.parse(html, nil, 'utf-8')
       (1..100).each do |j|
         row = "#main-container > div.row > div > div.panel.panel-default.panel-filter > div.table-responsive > table > tbody > tr:nth-child(#{j})"
