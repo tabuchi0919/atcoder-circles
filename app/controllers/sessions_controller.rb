@@ -3,6 +3,7 @@ class SessionsController < ApplicationController
     circle = Circle.find_by(circle_name: params[:circle_name])
     if circle&.authenticate(params[:password])
       session[:circle_id] = circle.id
+      circle.update(login_at: Time.current)
       flash[:success] = 'ログインしました'
       redirect_to circle
     else

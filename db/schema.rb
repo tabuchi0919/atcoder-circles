@@ -26,10 +26,10 @@ ActiveRecord::Schema.define(version: 2019_12_26_011534) do
   create_table "circles", force: :cascade do |t|
     t.string "circle_name", null: false
     t.string "password_digest", null: false
+    t.datetime "login_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "private", null: false
-    t.boolean "university", default: false, null: false
     t.index ["circle_name"], name: "index_circles_on_circle_name", unique: true
   end
 

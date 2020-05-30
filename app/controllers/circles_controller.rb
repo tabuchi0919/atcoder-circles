@@ -1,6 +1,6 @@
 class CirclesController < ApplicationController
   def index
-    @circles = Circle.where(university: true)
+    redirect_to root_path
   end
 
   def new

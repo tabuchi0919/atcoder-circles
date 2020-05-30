@@ -21,7 +21,7 @@ create_table :circles, force: :cascade do |t|
   t.string :circle_name, null: false
   t.string :password_digest, null: false
   t.boolean :private, null: false
-  t.boolean :university, null: false, default: false
+  t.datetime :login_at
   t.timestamps
   t.index :circle_name, unique: true
 end
